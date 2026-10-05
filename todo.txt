@@ -1,0 +1,12 @@
+1. add pop up of products coming soon
+2. when remove item in summary page, it should ask for confirmation
+3. customer name and mobile number should be mandatory fields
+4. add whatsapp logo in send on whatsapp group
+
+
+
+
+
+
+
+
