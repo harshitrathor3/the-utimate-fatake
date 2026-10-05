@@ -53,6 +53,7 @@ function spy(){
   hs.forEach(h=>io.observe(h));
 }
 const min=()=>total()<D.store.minOrder?`<p class="note">Minimum order is ${fmt(D.store.minOrder)}. Add ${fmt(D.store.minOrder-total())} more.</p>`:'';
+alert('Orders are not yet started, Stay Tuned!!');
 function rdr(){
   const it=items();
   $('#db').innerHTML=it.length?it.map(i=>`<div class="li"><span>${i.name}<br><span class="mut">${i.n} &times; ${fmt(i.price)}</span></span><b>${fmt(i.n*i.price)}</b></div>`).join(''):'<p class="empty">Your cart is empty.</p>';
