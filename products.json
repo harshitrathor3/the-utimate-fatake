@@ -1,0 +1,32 @@
+{
+  "store": {
+    "name": "Jyoti Crackers",
+    "tagline": "Wholesale-quality crackers, packed fresh for your celebration.",
+    "whatsapp": "919999999999",
+    "minOrder": 1000
+  },
+  "categories": [
+    {
+      "name": "Sparklers",
+      "products": [
+        { "id": "SP01", "name": "Gold Sparklers 10cm (10 pcs)", "image": "images/sparkler-10.jpg", "description": "Classic golden sparklers, bright and long-lasting.", "price": 40 },
+        { "id": "SP02", "name": "Colour Sparklers 15cm (10 pcs)", "image": "images/sparkler-15.jpg", "description": "Multi-colour sparks for kids and family.", "price": 70 }
+      ]
+    },
+    {
+      "name": "Flower Pots",
+      "products": [
+        { "id": "FP01", "name": "Flower Pot Big (5 pcs)", "image": "images/pot-big.jpg", "description": "Tall fountain of golden sparks.", "price": 180 },
+        { "id": "FP02", "name": "Colour Koti Pot (10 pcs)", "image": "images/pot-koti.jpg", "description": "Changing colours, 40 second burn.", "price": 320 },
+        { "id": "FP03", "name": "Deluxe Pot (1 pc)", "image": "images/pot-deluxe.jpg", "description": "Premium multi-effect fountain.", "price": 150 }
+      ]
+    },
+    {
+      "name": "Sky Shots",
+      "products": [
+        { "id": "SS01", "name": "7 Shot Multicolour", "image": "images/shot-7.jpg", "description": "Seven bursts of colour in the night sky.", "price": 260 },
+        { "id": "SS02", "name": "30 Shot Celebration", "image": "images/shot-30.jpg", "description": "Big finale, 30 aerial shots.", "price": 850 }
+      ]
+    }
+  ]
+}

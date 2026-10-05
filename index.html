@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cracker Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+:root{--ink:#1c1426;--mut:#6d647a;--bg:#f4f3f8;--card:#fff;--ac:#f5a623;--ac2:#5b2a86;--ln:#e5e2ee}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Bricolage Grotesque',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+button,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--ac2);outline-offset:2px}
+header{position:sticky;top:0;z-index:20;background:var(--ink);color:#fff;display:flex;gap:16px;align-items:center;padding:12px 20px}
+header b{font-size:20px;font-weight:800;white-space:nowrap;cursor:pointer}
+#q{flex:1;max-width:520px;margin:auto;padding:10px 16px;border-radius:99px;border:0;background:#ffffff1f;color:#fff}
+#q::placeholder{color:#cfc8dc}
+.cb{background:var(--ac);color:var(--ink);border:0;border-radius:99px;padding:9px 16px;font-weight:600;white-space:nowrap}
+.hero{background:linear-gradient(120deg,#1c1426,var(--ac2));color:#fff;padding:44px 20px}
+.hero h1{font-size:clamp(28px,5vw,48px);font-weight:800;max-width:700px;line-height:1.1}
+.hero p{margin-top:10px;color:#e3d9f2;max-width:520px}
+.chips{position:sticky;top:60px;z-index:10;background:var(--bg);display:flex;gap:8px;overflow-x:auto;padding:12px 20px;border-bottom:1px solid var(--ln)}
+.chips a{white-space:nowrap;padding:7px 14px;border-radius:99px;background:var(--card);border:1px solid var(--ln);color:var(--ink);text-decoration:none;font-size:14px}
+.chips a:hover{background:var(--ac)}
+main{max-width:1200px;margin:auto;padding:20px}
+h2{font-size:24px;margin:28px 0 14px;scroll-margin-top:120px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--ln);display:flex;flex-direction:column}
+.ph{aspect-ratio:4/3;background:linear-gradient(135deg,#efe6ff,#ffe9c2);display:grid;place-items:center;font-size:48px;position:relative}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bd{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.bd h3{font-size:16px;font-weight:600}
+.bd p{font-size:13px;color:var(--mut);flex:1}
+.pr{font-size:20px;font-weight:800}
+.row{display:flex;gap:8px;align-items:center}
+.qty{display:inline-flex;border:1px solid var(--ln);border-radius:10px;overflow:hidden}
+.qty button{border:0;background:#f4f3f8;width:32px}
+.qty input{width:44px;text-align:center;border:0;-moz-appearance:textfield}
+.add{flex:1;background:var(--ink);color:#fff;border:0;border-radius:10px;padding:9px;font-weight:600}
+.add:hover{background:var(--ac2)}
+#dr{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:#fff;z-index:40;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;box-shadow:-8px 0 30px #0003}
+#dr.open{transform:none}
+#ov{position:fixed;inset:0;background:#0006;z-index:30;display:none}
+#ov.open{display:block}
+.dh{padding:16px 20px;display:flex;justify-content:space-between;font-weight:800;font-size:20px;border-bottom:1px solid var(--ln)}
+.dh button{border:0;background:none;font-size:22px}
+.db{flex:1;overflow:auto;padding:12px 20px}
+.li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--ln);font-size:14px}
+.df{padding:16px 20px;border-top:1px solid var(--ln);display:grid;gap:8px}
+.btn{border:1px solid var(--ink);background:#fff;border-radius:10px;padding:10px;font-weight:600;text-align:center}
+.btn.p{background:var(--ac);border-color:var(--ac)}
+.btn.g{background:#1faa59;border-color:#1faa59;color:#fff}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:18px}
+.note{font-size:13px;color:#a24400;background:#fff3e0;padding:8px 10px;border-radius:8px}
+.mut{color:var(--mut)}
+.pg{background:#fff;border-radius:16px;padding:20px;border:1px solid var(--ln)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 6px;border-bottom:1px solid var(--ln)}
+td.r,th.r{text-align:right}
+.cu{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:16px 0}
+.cu input{padding:10px;border:1px solid var(--ln);border-radius:10px}
+.x{border:0;background:none;color:#c0392b;font-size:18px}
+.err,.empty{padding:40px;text-align:center;color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header>
+  <b id="logo" onclick="location.hash=''">Crackers</b>
+  <input id="q" type="search" placeholder="Search all crackers..." aria-label="Search products">
+  <button class="cb" onclick="dr(1)">Cart (<span id="cc">0</span>) &middot; <span id="ct">&#8377;0</span></button>
+</header>
+<div id="app"><p class="empty">Loading...</p></div>
+<div id="ov" onclick="dr(0)"></div>
+<aside id="dr" aria-label="Cart">
+  <div class="dh">Your order <button onclick="dr(0)" aria-label="Close">&times;</button></div>
+  <div class="db" id="db"></div>
+  <div class="df" id="df"></div>
+</aside>
+<script>
+const $=s=>document.querySelector(s), fmt=n=>'\u20B9'+n.toLocaleString('en-IN');
+let D, P={}, q='', cart=ld('cart',{}), cust=ld('cust',{name:'',phone:''});
+function ld(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function sv(){try{localStorage.setItem('cart',JSON.stringify(cart));localStorage.setItem('cust',JSON.stringify(cust))}catch(e){}}
+fetch('products.json').then(r=>r.json()).then(d=>{
+  D=d; d.categories.forEach(c=>c.products.forEach(p=>P[p.id]={...p,cat:c.name}));
+  document.title=d.store.name; $('#logo').textContent=d.store.name;
+  Object.keys(cart).forEach(i=>{if(!P[i])delete cart[i]}); route();
+}).catch(()=>$('#app').innerHTML='<p class="err">Could not load products.json. Host the folder on a web server (or run <code>python -m http.server</code>) instead of double-clicking index.html.</p>');
+const items=()=>Object.entries(cart).map(([id,n])=>({...P[id],n})).sort((a,b)=>a.cat.localeCompare(b.cat));
+const total=()=>items().reduce((s,i)=>s+i.n*i.price,0);
+const count=()=>Object.values(cart).reduce((s,n)=>s+n,0);
+function head(){$('#cc').textContent=count();$('#ct').textContent=fmt(total())}
+function card(p){return `<div class="card"><div class="ph">&#127878;<img loading="lazy" src="${p.image}" alt="${p.name}" onerror="this.remove()"></div>
+<div class="bd"><h3>${p.name}</h3><p>${p.description}</p><div class="pr">${fmt(p.price)}</div>
+<div class="row"><div class="qty"><button onclick="st('${p.id}',-1)" aria-label="Less">&minus;</button><input id="q_${p.id}" type="number" min="1" value="1" aria-label="Quantity"><button onclick="st('${p.id}',1)" aria-label="More">+</button></div>
+<button class="add" onclick="add('${p.id}')">Add to cart</button></div></div></div>`}
+function st(id,d){const e=$('#q_'+id);e.value=Math.max(1,(+e.value||1)+d)}
+function add(id){const n=Math.max(1,parseInt($('#q_'+id).value)||1);cart[id]=(cart[id]||0)+n;$('#q_'+id).value=1;upd();dr(1)}
+function setq(id,n){n=parseInt(n)||0;if(n<1)delete cart[id];else cart[id]=n;upd()}
+function upd(){sv();head();rdr();if(location.hash=='#/cart')route()}
+function route(){
+  head(); rdr();
+  if(location.hash=='#/cart')return cartPage();
+  const t=q.trim().toLowerCase();
+  const cats=D.categories.map(c=>({...c,products:t?c.products.filter(p=>(p.name+p.description+c.name).toLowerCase().includes(t)):c.products})).filter(c=>c.products.length);
+  $('#app').innerHTML=(t?'':`<div class="hero"><h1>${D.store.tagline}</h1><p>Pick your crackers, set quantity, download your order sheet.</p></div>`)
+   +`<nav class="chips">${cats.map((c,i)=>`<a href="#c${i}" onclick="document.getElementById('c${i}').scrollIntoView();return false">${c.name}</a>`).join('')}</nav><main>`
+   +(cats.length?cats.map((c,i)=>`<h2 id="c${i}">${c.name}</h2><div class="grid">${c.products.map(card).join('')}</div>`).join(''):`<p class="empty">No crackers match "${q}". Try a shorter word.</p>`)+'</main>';
+}
+function cartPage(){
+  const it=items();
+  $('#app').innerHTML=`<main><a href="#" class="mut">&larr; Continue shopping</a><h2>Detailed order summary</h2><div class="pg">`+(it.length?`
+  <div class="cu"><input id="cn" placeholder="Customer name" value="${cust.name}" oninput="cust.name=this.value;sv()"><input id="cp" placeholder="Phone number" value="${cust.phone}" oninput="cust.phone=this.value;sv()"></div>
+  <div style="overflow-x:auto"><table><tr><th>Product</th><th>Category</th><th>Qty</th><th class="r">Rate</th><th class="r">Amount</th><th></th></tr>
+  ${it.map(i=>`<tr><td>${i.name}</td><td class="mut">${i.cat}</td><td><div class="qty"><button onclick="setq('${i.id}',${i.n-1})">&minus;</button><input type="number" value="${i.n}" onchange="setq('${i.id}',this.value)"><button onclick="setq('${i.id}',${i.n+1})">+</button></div></td><td class="r">${fmt(i.price)}</td><td class="r">${fmt(i.n*i.price)}</td><td><button class="x" onclick="setq('${i.id}',0)" aria-label="Remove">&times;</button></td></tr>`).join('')}
+  </table></div><div class="tot" style="margin:16px 0"><span>Total (${count()} items)</span><span>${fmt(total())}</span></div>${min()}
+  <div class="row" style="flex-wrap:wrap"><button class="btn p" onclick="pdf()">Download PDF</button><button class="btn g" onclick="wa()">Send on WhatsApp</button><button class="btn" onclick="if(confirm('Clear cart?')){cart={};upd()}">Clear cart</button></div>`
+  :'<p class="empty">Your cart is empty. Add some crackers to get started.</p>')+'</div></main>';
+}
+const min=()=>total()<D.store.minOrder?`<p class="note">Minimum order is ${fmt(D.store.minOrder)}. Add ${fmt(D.store.minOrder-total())} more.</p>`:'';
+function rdr(){
+  const it=items();
+  $('#db').innerHTML=it.length?it.map(i=>`<div class="li"><span>${i.name}<br><span class="mut">${i.n} &times; ${fmt(i.price)}</span></span><b>${fmt(i.n*i.price)}</b></div>`).join(''):'<p class="empty">Your cart is empty.</p>';
+  $('#df').innerHTML=it.length?`<div class="tot"><span>Total</span><span>${fmt(total())}</span></div>${min()}<a class="btn p" href="#/cart" onclick="dr(0)">See detailed summary</a><button class="btn" onclick="pdf()">Download PDF</button>`:'';
+}
+function dr(o){$('#dr').classList.toggle('open',!!o);$('#ov').classList.toggle('open',!!o)}
+function pdf(){
+  const it=items(); if(!it.length)return;
+  const {jsPDF}=window.jspdf, d=new jsPDF(), rs=n=>'Rs. '+n.toLocaleString('en-IN');
+  d.setFontSize(18).text(D.store.name+' - Order Sheet',14,16);
+  d.setFontSize(10).text('Date: '+new Date().toLocaleString('en-IN'),14,23);
+  d.text('Customer: '+(cust.name||'-')+'   Phone: '+(cust.phone||'-'),14,29);
+  d.autoTable({startY:34,head:[['Packed','Product','Category','Qty','Rate','Amount']],
+    body:it.map(i=>['[    ]',i.name,i.cat,i.n,rs(i.price),rs(i.n*i.price)]),
+    foot:[['','','','Total items: '+count(),'',rs(total())]],
+    headStyles:{fillColor:[28,20,38]},footStyles:{fillColor:[245,166,35],textColor:20},
+    columnStyles:{3:{halign:'center',fontStyle:'bold'},4:{halign:'right'},5:{halign:'right'}}});
+  d.save('order-'+Date.now()+'.pdf');
+}
+function wa(){
+  const t=`*New order - ${D.store.name}*\n${cust.name||''} ${cust.phone||''}\n\n`+items().map(i=>`${i.n} x ${i.name} = ${fmt(i.n*i.price)}`).join('\n')+`\n\n*Total: ${fmt(total())}*`;
+  open('https://wa.me/'+D.store.whatsapp+'?text='+encodeURIComponent(t),'_blank');
+}
+$('#q').addEventListener('input',e=>{q=e.target.value;if(location.hash=='#/cart')location.hash='';else if(D)route()});
+addEventListener('hashchange',()=>{if(D)route();scrollTo(0,0)});
+</script></body></html>
