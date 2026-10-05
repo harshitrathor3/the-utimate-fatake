@@ -1,9 +1,9 @@
 {
   "store": {
-    "name": "Jyoti Crackers",
-    "tagline": "Wholesale-quality crackers, packed fresh for your celebration.",
-    "whatsapp": "919999999999",
-    "minOrder": 1000
+    "name": "The Ultimate Fatake",
+    "tagline": "Fatake pochenge aapke ghar tak, aap function enjoy kijiye",
+    "whatsapp": "919926546160",
+    "minOrder": 300
   },
   "categories": [
     {
@@ -77,12 +77,12 @@
     "email": "hello@yourstore.com",
     "partners": [
       {
-        "name": "Partner One",
-        "phone": "+91 98765 43210"
+        "name": "Harshit Rathore",
+        "phone": "+91 99265 46160"
       },
       {
-        "name": "Partner Two",
-        "phone": "+91 91234 56789"
+        "name": "Shobhit Joshi",
+        "phone": "+91 77248 50093"
       }
     ]
   }
