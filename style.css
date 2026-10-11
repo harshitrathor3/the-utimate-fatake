@@ -19,6 +19,7 @@ header b{font-size:20px;font-weight:800;letter-spacing:-.02em;white-space:nowrap
 .hero{padding:72px 24px 56px;background:radial-gradient(ellipse 60% 120% at 85% 0,#4a2a7a66,transparent 70%),radial-gradient(ellipse 40% 90% at 10% 100%,#d8b26e22,transparent 70%);border-bottom:1px solid var(--ln)}
 .hero h1,.hero p{max-width:1152px;margin-inline:auto}
 .hero h1{font-size:clamp(30px,5.5vw,58px);font-weight:600;letter-spacing:-.03em;line-height:1.05;max-width:760px;margin-left:max(0px,calc((100% - 1152px)/2))}
+.hero-subline{display:block;margin-top:10px;color:var(--gold2);font-size:.52em;line-height:1.15}
 .hero p{margin-top:14px;color:var(--mut);max-width:480px;margin-left:max(0px,calc((100% - 1152px)/2))}
 
 .chips{position:sticky;top:61px;z-index:10;display:flex;gap:8px;overflow-x:auto;padding:12px 24px;background:#0b0a10f0;border-bottom:1px solid var(--ln);scrollbar-width:none}

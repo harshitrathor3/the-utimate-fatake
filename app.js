@@ -24,7 +24,9 @@ function route(){
   if(location.hash=='#/cart')return cartPage();
   const t=q.trim().toLowerCase();
   const cats=D.categories.map(c=>({...c,products:t?c.products.filter(p=>(p.name+p.description+c.name).toLowerCase().includes(t)):c.products})).filter(c=>c.products.length);
-  $('#app').innerHTML=(t?'':`<div class="hero"><h1>${D.store.tagline}</h1><p>Pick your crackers, set quantity, download your order sheet and get order delivered at your home.</p></div>`)
+  const phrase='Fatake chuno, khushiyan jodo!', tagline=D.store.tagline, split=tagline.indexOf(phrase);
+  const hero=split<0?tagline:`${tagline.slice(0,split).trim()}<span class="hero-subline">${tagline.slice(split).trim()}</span>`;
+  $('#app').innerHTML=(t?'':`<div class="hero"><h1>${hero}</h1><p>${D.store.eyebrow}</p></div>`)
    +`<nav class="chips">${cats.map((c,i)=>`<a href="#c${i}" onclick="document.getElementById('c${i}').scrollIntoView();return false">${c.name}</a>`).join('')}${t?'':'<a href="#contact" onclick="document.getElementById(\'contact\').scrollIntoView();return false">Contact</a>'}</nav><main>`
    +(cats.length?cats.map((c,i)=>`<h2 id="c${i}">${c.name}</h2><div class="grid">${c.products.map(card).join('')}</div>`).join(''):`<p class="empty">No crackers match "${q}". Try a shorter word.</p>`)+'</main>'+(t?'':contact());spy();
 }
